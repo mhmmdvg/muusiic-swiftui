@@ -45,7 +45,7 @@ struct MiniPlayer: View{
                     url: currentlyPlayerFetcher.currentlyPlayer?.item.album.images[0].url,
                     content: { image in
                         image.resizable()
-                             .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
                              .frame(width: expand ? height : 45, height: expand ? height : 45)
                              .cornerRadius(10)
                     },
@@ -341,6 +341,6 @@ struct MiniPlayer: View{
 
 //struct MiniPlayer_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MiniPlayer()
+//        MiniPlayer(animation: <#Namespace.ID#>, expand: <#Binding<Bool>#>, isTyping: <#Binding<Bool>#>)
 //    }
 //}

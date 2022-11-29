@@ -8,9 +8,9 @@
 import SwiftUI
 
 enum TabsTitle: String {
-    case library
+    case listenNow
     case search
-    case radio
+    case library
 }
 
 struct TabBarView: View {
@@ -23,15 +23,16 @@ struct TabBarView: View {
     
     @Namespace var animation
     
+    
     var body: some View {
         
             ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
                     TabView(selection: $current) {
-                        LibraryView()
-                            .tag(TabsTitle.library)
+                        ListenNowView()
+                            .tag(TabsTitle.listenNow)
                             .tabItem {
-                                Image(systemName: "rectangle.stack.fill")
-                                Text("Library")
+                                Image(systemName: "play.circle.fill")
+                                Text("Listen Now")
                             }
 
                         SearchView(isTyping: $isTyping)
@@ -39,15 +40,13 @@ struct TabBarView: View {
                             .tabItem {
                                 Image(systemName: "magnifyingglass")
                                 Text("Search")
-                                
                             }
-                            
                         
-                        Text("Radio")
-                            .tag(TabsTitle.radio)
+                        LibraryView()
+                            .tag(TabsTitle.library)
                             .tabItem {
-                                Image(systemName: "dot.radiowaves.left.and.right")
-                                Text("Radio")
+                                Image(systemName: "rectangle.stack.fill")
+                                Text("Library")
                             }
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)

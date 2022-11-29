@@ -22,7 +22,7 @@ class CurrentPlaylistFetcher: ObservableObject {
                 case .success(let model):
                     self?.currentPlaylist = model.items
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print("tes 3 \(error.localizedDescription)")
                 }
             }
         }

@@ -22,7 +22,7 @@ class CategoriesPlaylistFetcher: ObservableObject {
                 case .success(let model):
                     self?.categories = model.categories.items
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print("tes 4 \(error.localizedDescription)")
                 }
             }
         }

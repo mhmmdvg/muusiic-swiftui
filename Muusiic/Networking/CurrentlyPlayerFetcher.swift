@@ -23,7 +23,7 @@ class CurrentlyPlayerFetcher: ObservableObject {
                 case .success(let model):
                     self?.currentlyPlayer = model
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print("tes 5 \(error.localizedDescription)")
                 }
             }
         }
