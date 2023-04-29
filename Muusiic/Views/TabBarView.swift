@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum TabsTitle: String {
+enum TabsBar: String {
     case listenNow
     case search
     case library
@@ -15,7 +15,7 @@ enum TabsTitle: String {
 
 struct TabBarView: View {
     
-    @State var current: TabsTitle = .search
+    @State var current: TabsBar = .search
     @State var expand = false
     @State var isTyping: Bool = false
     
@@ -29,21 +29,21 @@ struct TabBarView: View {
             ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
                     TabView(selection: $current) {
                         ListenNowView()
-                            .tag(TabsTitle.listenNow)
+                            .tag(TabsBar.listenNow)
                             .tabItem {
                                 Image(systemName: "play.circle.fill")
                                 Text("Listen Now")
                             }
 
                         SearchView(isTyping: $isTyping)
-                            .tag(TabsTitle.search)
+                            .tag(TabsBar.search)
                             .tabItem {
                                 Image(systemName: "magnifyingglass")
                                 Text("Search")
                             }
                         
                         LibraryView()
-                            .tag(TabsTitle.library)
+                            .tag(TabsBar.library)
                             .tabItem {
                                 Image(systemName: "rectangle.stack.fill")
                                 Text("Library")

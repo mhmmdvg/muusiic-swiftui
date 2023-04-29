@@ -40,13 +40,20 @@ struct SearchView: View {
                         
                         ForEach(categoriesPlaylists.categories, id: \.self) { item in
                             Button(action: {}) {
-                                AsyncImage(url: item.icons[0].url) { image in
-                                    image.resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: (UIScreen.main.bounds.width - 50) / 2, height: 120)
-                                        .cornerRadius(12)
-                                } placeholder: {
-                                    ProgressView()
+                                CacheAsyncImage(url: item.icons[0].url) { phase in
+                                    if let image = phase.image {
+                                        image.resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: (UIScreen.main.bounds.width - 50) / 2, height: 120)
+                                            .cornerRadius(12)
+                                    } else if phase.error != nil {
+                                        Text(phase.error?.localizedDescription ?? "error")
+                                            .foregroundColor(.pink)
+                                            .frame(width: (UIScreen.main.bounds.width - 50) / 2, height: 120)
+                                    } else {
+                                        ProgressView()
+                                            .frame(width: (UIScreen.main.bounds.width - 50) / 2, height: 120)
+                                    }
                                 }
                                 
                             }
@@ -59,6 +66,9 @@ struct SearchView: View {
             }
             .navigationTitle("Search")
         }
+//        .onAppear {
+//            URLCache.shared.memoryCapacity = 1024 * 1024 * 512
+//        }
     }
 }
 

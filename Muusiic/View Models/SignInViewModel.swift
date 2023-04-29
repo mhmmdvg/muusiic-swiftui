@@ -84,7 +84,7 @@ class SignInViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentati
             default: break
             }
         } receiveValue: { (url) in
-            print(url)
+//            print("this is url \(url)")
             guard let code = URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == "code" })?.value else {
                 return
             }

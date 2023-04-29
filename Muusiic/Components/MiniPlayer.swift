@@ -42,17 +42,23 @@ struct MiniPlayer: View{
                 if expand { Spacer(minLength: 0) }
                 
                 AsyncImage(
-                    url: currentlyPlayerFetcher.currentlyPlayer?.item.album.images[0].url,
-                    content: { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fill)
-                             .frame(width: expand ? height : 45, height: expand ? height : 45)
-                             .cornerRadius(10)
-                    },
-                    placeholder: {
-                        ProgressView()
+                    url: currentlyPlayerFetcher.currentlyPlayer?.item.album.images[0].url)
+                    { phase in
+                        if let image = phase.image {
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                                 .frame(width: expand ? height : 45, height: expand ? height : 45)
+                                 .cornerRadius(10)
+                        } else if phase.error != nil {
+                            Text(phase.error?.localizedDescription ?? "error")
+                                .foregroundColor(.pink)
+                                .frame(width: expand ? height : 45, height: expand ? height : 45)
+                        } else {
+                            ProgressView()
+                                .frame(width: expand ? height : 45, height: expand ? height : 45)
+                        }
                     }
-                )
+                
                 
                 
                 

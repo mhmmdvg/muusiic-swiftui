@@ -15,14 +15,20 @@ struct PlaylistRow: View {
     
     var body: some View {
         HStack(spacing: 10) {
-            
-            AsyncImage(url: imageUrl) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: (UIScreen.main.bounds.width - 50) / 3.8, height: 90)
-                    .cornerRadius(6)
-            } placeholder: {
-                ProgressView()
+            AsyncImage(url: imageUrl) { phase in
+                if let image = phase.image {
+                    image.resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: (UIScreen.main.bounds.width - 50) / 3.8, height: 90)
+                        .cornerRadius(6)
+                } else if phase.error != nil {
+                    Text(phase.error?.localizedDescription ?? "error")
+                        .foregroundColor(.pink)
+                        .frame(width: (UIScreen.main.bounds.width - 50) / 3.8, height: 90)
+                } else {
+                    ProgressView()
+                        .frame(width: (UIScreen.main.bounds.width - 50) / 3.8, height: 90)
+                }
             }
             
             VStack(alignment: .leading) {

@@ -20,10 +20,6 @@ struct PlaylistHorizontalGrid: View {
                     .fontWeight(.semibold)
                     .lineLimit(2)
                 Spacer()
-                Button(action: {}) {
-                    Text("See All")
-                        .foregroundColor(.pink)
-                }
             }
             .padding(.horizontal)
             ScrollView(.horizontal, showsIndicators: false) {
@@ -32,36 +28,38 @@ struct PlaylistHorizontalGrid: View {
                         ForEach(currentPlaylist.prefix(10), id: \.self) { item in
                             Button(action: {}) {
                                 VStack {
-                                    AsyncImage(url: item.images[0].url) { image in
-                                        image.resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: UIScreen.main.bounds.width / 1.5, height: 350)
-                                            .overlay(alignment: .bottom) {
-                                                VStack {
-                                                    Text(item.name)
-                                                        .font(.system(size: 18))
-                                                        .fontWeight(.semibold)
-                                                        .lineLimit(2)
-                                                        .foregroundColor(.primary)
-                                                    if item.description != "" {
-                                                        Text(item.description)
-                                                            .font(.system(size: 16))
-                                                            .foregroundColor(.gray)
+                                    CacheAsyncImage(url: item.images[0].url) { phase in
+                                        if let image = phase.image {
+                                            image.resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: UIScreen.main.bounds.width / 1.5, height: 350)
+                                                .overlay(alignment: .bottom) {
+                                                    VStack {
+                                                        Text(item.name)
+                                                            .font(.system(size: 18))
+                                                            .fontWeight(.semibold)
                                                             .lineLimit(2)
-                                                            .padding(.horizontal)
-                                                    } else {
-                                                        Text("By \(item.owner.display_name)")
-                                                            .foregroundColor(.gray)
-                                                            .padding(.horizontal)
+                                                            .foregroundColor(.primary)
+                                                        if item.description != "" {
+                                                            Text(item.description)
+                                                                .font(.system(size: 16))
+                                                                .foregroundColor(.gray)
+                                                                .lineLimit(2)
+                                                                .padding(.horizontal)
+                                                        } else {
+                                                            Text("By \(item.owner.display_name)")
+                                                                .foregroundColor(.gray)
+                                                                .padding(.horizontal)
+                                                        }
                                                     }
+                                                    .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height / 9)
+                                                    .background(BlurView())
                                                 }
-                                                .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height / 9)
-                                                .background(BlurView())
-                                            }
-                                    } placeholder: {
-                                        VStack {
+                                        } else if phase.error != nil {
+                                            Text(phase.error?.localizedDescription ?? "error")
+                                                .frame(width: UIScreen.main.bounds.width / 1.5, height: 350)
+                                        } else {
                                             ProgressView()
-                                        }
                                         .frame(width: UIScreen.main.bounds.width / 1.5, height: 350)
                                         .overlay(alignment: .bottom) {
                                             VStack {
@@ -77,6 +75,7 @@ struct PlaylistHorizontalGrid: View {
                                             .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height / 9)
                                             .background(BlurView())
                                         }
+                                        }
                                     }
                                 }
                                 .cornerRadius(14)
@@ -88,6 +87,9 @@ struct PlaylistHorizontalGrid: View {
                 .padding(.horizontal)
             }
         }
+//        .onAppear {
+//            URLCache.shared.memoryCapacity = 1024 * 1024 * 512
+//        }
     }
 }
 

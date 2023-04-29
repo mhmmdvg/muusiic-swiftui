@@ -32,17 +32,7 @@ struct ListenNowView: View {
                         .offset(x: 0, y: -50)
                     ,alignment: .topTrailing)
                 .padding(.bottom, 80)
-            }
-//            .toolbar(content: {
-//                ToolbarItem {
-//                    Button(action: {}) {
-//                        Image(systemName: "plus")
-//                            .foregroundColor(.pink)
-//                            .font(.title3)
-//                    }
-//                }
-//            })
-            
+            }            
         }
     }
 }

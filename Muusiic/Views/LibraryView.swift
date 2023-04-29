@@ -22,6 +22,7 @@ struct LibraryView: View {
                             imageUrl: item.images[0].url,
                             playlistName: item.name,
                             playlistDesc: item.description)
+
                     }
 
                 }
@@ -38,6 +39,10 @@ struct LibraryView: View {
                 }
             })
         }
+//        .onAppear {
+////            print("cache \(URLCache.shared.memoryCapacity / 1024) KB")
+//            URLCache.shared.memoryCapacity = 1024 * 1024 * 512
+//        }
        
     }
 }
