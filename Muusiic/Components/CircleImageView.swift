@@ -12,7 +12,7 @@ struct CircleImageView: View {
     let image: URL?
     
     var body: some View {
-        CacheAsyncImage(url: image!) { phase in
+        CacheAsyncImage(url: image ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed")!) { phase in
             if let image = phase.image {
                 image.resizable()
                     .scaledToFit()

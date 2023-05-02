@@ -13,7 +13,8 @@ struct MuusiicApp: App {
         WindowGroup {
 //            LoginView()
             if AuthService.shared.isSignedIn {
-                TabBarView()
+                    TabBarView()
+                    .environmentObject(PlaySetting())
             } else {
                 LoginView()
             }

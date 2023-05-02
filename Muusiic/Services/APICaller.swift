@@ -43,6 +43,29 @@ final class APICaller {
         }
     }
     
+    
+// GET
+    
+    public func getSearch(key: String, completion: @escaping (Result<CurrentlyPlayer, Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseAPI + "/search?q=\(key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")" + "&type=track,album,artist"),
+            type: .GET) { baseRequest in
+                let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
+                    guard let data = data, error == nil else {
+                        completion(.failure(APIError.failedToGetData))
+                        return
+                    }
+                    do {
+                        let cek = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                        print(cek)
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+                task.resume()
+            }
+    }
+    
     public func getCurrentlyPlayer(completion: @escaping (Result<CurrentlyPlayer, Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseAPI + "/me/player/currently-playing"),

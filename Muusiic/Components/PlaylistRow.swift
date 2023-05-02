@@ -15,7 +15,7 @@ struct PlaylistRow: View {
     
     var body: some View {
         HStack(spacing: 10) {
-            AsyncImage(url: imageUrl) { phase in
+            CacheAsyncImage(url: (imageUrl ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed"))!) { phase in
                 if let image = phase.image {
                     image.resizable()
                         .aspectRatio(contentMode: .fill)
@@ -23,7 +23,6 @@ struct PlaylistRow: View {
                         .cornerRadius(6)
                 } else if phase.error != nil {
                     Text(phase.error?.localizedDescription ?? "error")
-                        .foregroundColor(.pink)
                         .frame(width: (UIScreen.main.bounds.width - 50) / 3.8, height: 90)
                 } else {
                     ProgressView()
@@ -48,7 +47,7 @@ struct PlaylistRow: View {
 struct PlaylistRow_Previews: PreviewProvider {
     static var previews: some View {
         PlaylistRow(
-            imageUrl: URL(string: "https://i.scdn.co/image/ab67616d0000b273c4a9bdd7f2b255da05f6d481"),
+            imageUrl: URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed"),
             playlistName: "iKon",
             playlistDesc: "Lagu Asyik"
         )

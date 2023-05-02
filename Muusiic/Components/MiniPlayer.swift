@@ -36,7 +36,7 @@ struct MiniPlayer: View{
                 .padding(.top, expand ? safeArea?.top : 0)
                 .padding(.vertical, expand ? 30 : 0)
             
-            
+            // Small
             HStack(spacing: 15) {
                 
                 if expand { Spacer(minLength: 0) }
@@ -320,7 +320,7 @@ struct MiniPlayer: View{
             })
         )
         .cornerRadius(expand ? 20 : 0)
-        .offset(y: expand ? 0 : -48)
+        .offset(y: expand ? 0 : -49)
         .offset(y: offset)
         .gesture(DragGesture().onEnded(onEnded(value:)).onChanged(onChanged(value:)))
         .ignoresSafeArea()

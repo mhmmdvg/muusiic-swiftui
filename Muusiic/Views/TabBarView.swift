@@ -15,51 +15,128 @@ enum TabsBar: String {
 
 struct TabBarView: View {
     
-    @State var current: TabsBar = .search
-    @State var expand = false
+    @State var currentTab: TabsBar = .search
+    @State private var expandPlayer: Bool = false
+    @Namespace private var animation
+    
     @State var isTyping: Bool = false
     
     @StateObject var currentPlayer = CurrentlyPlayerFetcher()
     
-    @Namespace var animation
-    
     
     var body: some View {
-        
-            ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
-                    TabView(selection: $current) {
-                        ListenNowView()
-                            .tag(TabsBar.listenNow)
-                            .tabItem {
-                                Image(systemName: "play.circle.fill")
-                                Text("Listen Now")
-                            }
 
-                        SearchView(isTyping: $isTyping)
-                            .tag(TabsBar.search)
-                            .tabItem {
-                                Image(systemName: "magnifyingglass")
-                                Text("Search")
-                            }
-                        
-                        LibraryView()
-                            .tag(TabsBar.library)
-                            .tabItem {
-                                Image(systemName: "rectangle.stack.fill")
-                                Text("Library")
-                            }
+        if #available(iOS 16.0, *) {
+            TabView(selection: $currentTab) {
+                ListenNowView()
+                    .tag(TabsBar.listenNow)
+                    .tabItem {
+                        Image(systemName: "play.circle.fill")
+                        Text("Listen Now")
                     }
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
-
-
-                if (currentPlayer.currentlyPlayer?.is_playing == true) {
-                    MiniPlayer(animation: animation, expand: $expand, isTyping: $isTyping)
-                } else {
-                    EmptyView()
-                }
+                    .toolbar(expandPlayer ? .hidden : .visible, for: .tabBar)
                 
+                SearchView(isTyping: $isTyping)
+                    .tag(TabsBar.search)
+                    .tabItem {
+                        Image(systemName: "magnifyingglass")
+                        Text("Search")
+                    }
+                    .toolbar(expandPlayer ? .hidden : .visible, for: .tabBar)
+                    
+                
+                LibraryView()
+                    .tag(TabsBar.library)
+                    .tabItem {
+                        Image(systemName: "rectangle.stack.fill")
+                        Text("Library")
+                    }
+                    .toolbar(expandPlayer ? .hidden : .visible, for: .tabBar)
+                
+                    
+                    
             }
+            .safeAreaInset(edge: .bottom) {
+                if currentPlayer.currentlyPlayer?.is_playing != false {
+                    NewMiniPlayer(expandPlayer: $expandPlayer, animation: animation)
+                }
+            }
+            .overlay {
+                if expandPlayer {
+                    ExpandedPlayer(expandPlayer: $expandPlayer, animation: animation)
+                        .transition(.asymmetric(insertion: .identity, removal: .offset(y: -5)))
+                }
+            }
+            .ignoresSafeArea(.keyboard)
+            
+        } else {
+            TabView(selection: $currentTab) {
+                ListenNowView()
+                    .tag(TabsBar.listenNow)
+                    .tabItem {
+                        Image(systemName: "play.circle.fill")
+                        Text("Listen Now")
+                    }
+                    
+                
+                SearchView(isTyping: $isTyping)
+                    .tag(TabsBar.search)
+                    .tabItem {
+                        Image(systemName: "magnifyingglass")
+                        Text("Search")
+                    }
+                    
+                    
+                
+                LibraryView()
+                    .tag(TabsBar.library)
+                    .tabItem {
+                        Image(systemName: "rectangle.stack.fill")
+                        Text("Library")
+                    }
+                    
+            }
+            .safeAreaInset(edge: .bottom) {
+                NewMiniPlayer(expandPlayer: $expandPlayer, animation: animation)
+            }
+            .overlay {
+                if expandPlayer {
+                    ExpandedPlayer(expandPlayer: $expandPlayer, animation: animation)
+                        .transition(.asymmetric(insertion: .identity, removal: .offset(y: -5)))
+                }
+            }
+            .ignoresSafeArea(.keyboard)
+        }
     }
+    
+//    @ViewBuilder
+//    func NewMiniPlayer() -> some View {
+//        ZStack {
+//            Rectangle()
+//                .fill(.ultraThickMaterial)
+//                .overlay {
+//                    MusicInfo()
+//                }
+//        }
+//        .frame(height: 70)
+//        .overlay(alignment: .bottom, content: {
+//            Rectangle()
+//                .fill(.gray.opacity(0.3))
+//                .frame(height: 1)
+////                .offset(y: -10)
+//        })
+//        .offset(y: -49)
+//    }
+//    
+    
+//    @ViewBuilder
+//    func TabList(_ title: String, _ icon: String) -> some View {
+//        Text(title)
+//            .tabItem {
+//                Image(systemName: icon)
+//                Text(title)
+//            }
+//    }
 }
 
 struct TabBarView_Previews: PreviewProvider {

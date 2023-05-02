@@ -45,17 +45,19 @@ struct LoginView: View {
                               }
                           }
                       } label: {
-                          Text("Sign In")
+                          Text("Spotify")
+                              .fontWeight(.semibold)
                               .foregroundColor(.white)
                               .padding()
-                              .background(.primary)
-                              .clipShape(RoundedRectangle(cornerRadius: 8))
+                              .background(.green)
+                              .clipShape(RoundedRectangle(cornerRadius: 100))
                       }
                   }
               }
           }
           .fullScreenCover(isPresented: $tabBar) {
-              TabBarView()
+                TabBarView()
+                  .environmentObject(PlaySetting())
           }
     }}
 

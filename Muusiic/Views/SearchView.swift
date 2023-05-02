@@ -15,6 +15,17 @@ struct SearchView: View {
     
     @StateObject var categoriesPlaylists = CategoriesPlaylistFetcher()
     
+//    func searchFetch() {
+//        APICaller.shared.getSearch(key: search) { success in
+//            switch success {
+//            case .success(let result):
+//                print(result)
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
+    
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     
     
@@ -23,13 +34,13 @@ struct SearchView: View {
             ScrollView {
                 VStack(spacing: 18) {
                     HStack(spacing: 15) {
-                        
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.primary)
-                        
+
                         TextField("Search", text: $search) {
                             self.isTyping = $0
                         }
+
                     }
                     .padding(.vertical, 10)
                     .padding(.horizontal)
@@ -66,6 +77,7 @@ struct SearchView: View {
             }
             .navigationTitle("Search")
         }
+//        .searchable(text: $search)
 //        .onAppear {
 //            URLCache.shared.memoryCapacity = 1024 * 1024 * 512
 //        }
