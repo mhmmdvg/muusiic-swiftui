@@ -10,8 +10,9 @@ import SwiftUI
 struct NewMiniPlayer: View {
     
     @Binding var expandPlayer: Bool
-    @StateObject var currentlyPlayerFetcher = CurrentlyPlayerFetcher()
     var animation: Namespace.ID
+    var coverImage: URL?
+    var songTitle: String?
     
     var body: some View {
         ZStack {
@@ -26,8 +27,8 @@ struct NewMiniPlayer: View {
                         MusicInfo(
                             expandSheet: $expandPlayer,
                             animation: animation,
-                            coverImage: currentlyPlayerFetcher.currentlyPlayer?.item.album.images[1].url ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed")!,
-                            songTitle: currentlyPlayerFetcher.currentlyPlayer?.item.name ?? "Undefined"
+                            coverImage: coverImage ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed")!,
+                            songTitle: songTitle ?? "Undefined"
                         )
                     }
                     .matchedGeometryEffect(id: "BGVIEW", in: animation)

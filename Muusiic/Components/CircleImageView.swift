@@ -19,6 +19,7 @@ struct CircleImageView: View {
                     .frame(width: 45, height: 45)
                     .clipShape(Circle())
             } else if phase.error != nil {
+                Image(systemName: "person.circle")
                 Text(phase.error?.localizedDescription ?? "error")
                     .foregroundColor(.pink)
                     .frame(width: 45, height: 45)

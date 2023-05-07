@@ -17,6 +17,10 @@ struct ExpandedPlayer: View {
     @State private var offsetY: CGFloat = 0
     @EnvironmentObject private var playing: PlaySetting
     
+    var coverImage: URL?
+    var songTitle: String?
+    var artistName: String?
+    
     var body: some View {
         GeometryReader {
             let size = $0.size
@@ -35,8 +39,8 @@ struct ExpandedPlayer: View {
                         MusicInfo(
                             expandSheet: $expandPlayer,
                             animation: animation,
-                            coverImage: currentlyPlayerFetcher.currentlyPlayer?.item.album.images[1].url ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed")!,
-                            songTitle: currentlyPlayerFetcher.currentlyPlayer?.item.name ?? "Undefined"
+                            coverImage: coverImage ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed")!,
+                            songTitle: songTitle ?? "Undefined"
                         )
                         //Disabling Interaction (sicne its not necessary here)
                             .allowsHitTesting(false)
@@ -55,7 +59,7 @@ struct ExpandedPlayer: View {
                     GeometryReader {
                         let size = $0.size
                         
-                        CacheAsyncImage(url: currentlyPlayerFetcher.currentlyPlayer?.item.album.images[1].url ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed")!) { phase in
+                        CacheAsyncImage(url: coverImage ?? URL(string: "https://i.scdn.co/image/ab67616d0000b273f0b9b2e2a024d7d87a21ffed")!) { phase in
                             if let image = phase.image {
                                 image.resizable()
                                     .aspectRatio(contentMode: .fill)
@@ -128,11 +132,12 @@ struct ExpandedPlayer: View {
                 VStack(spacing: spacing) {
                     HStack(alignment: .center, spacing: 15) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(currentlyPlayerFetcher.currentlyPlayer?.item.name ?? "Undefined")
+                            Text(songTitle ?? "Undefined")
                                 .font(.title3)
                                 .fontWeight(.semibold)
+                                .foregroundColor(.white)
                             
-                            Text(currentlyPlayerFetcher.currentlyPlayer?.item.album.artists[0].name ?? "Undefined")
+                            Text(artistName ?? "Undefined")
                                 .foregroundColor(.gray)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)

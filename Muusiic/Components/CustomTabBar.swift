@@ -20,7 +20,7 @@ struct CustomTabBar: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(tabs, id: \.self) { tab in
+            ForEach(tabs, id: \.title) { tab in
                 TabButton(title: tab.title, image: tab.iconName, currentTab: $currentTab)
             }
         }

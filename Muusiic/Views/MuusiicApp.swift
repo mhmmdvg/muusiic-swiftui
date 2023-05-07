@@ -11,7 +11,6 @@ import SwiftUI
 struct MuusiicApp: App {
     var body: some Scene {
         WindowGroup {
-//            LoginView()
             if AuthService.shared.isSignedIn {
                     TabBarView()
                     .environmentObject(PlaySetting())

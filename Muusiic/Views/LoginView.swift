@@ -57,7 +57,6 @@ struct LoginView: View {
           }
           .fullScreenCover(isPresented: $tabBar) {
                 TabBarView()
-                  .environmentObject(PlaySetting())
           }
     }}
 

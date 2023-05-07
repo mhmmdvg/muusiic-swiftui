@@ -21,6 +21,7 @@ class RecentlyPlayedFetcher: ObservableObject {
                 switch result {
                 case .success(let recent):
                     self.recentlyPlayedFetch = recent.items
+                    
                 case .failure(let error):
                     print("tes \(error.localizedDescription)")
                 }

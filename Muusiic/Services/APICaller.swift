@@ -46,9 +46,9 @@ final class APICaller {
     
 // GET
     
-    public func getSearch(key: String, completion: @escaping (Result<CurrentlyPlayer, Error>) -> Void) {
+    public func getSearch(key: String, completion: @escaping (Result<SearchResult, Error>) -> Void) {
         createRequest(
-            with: URL(string: Constants.baseAPI + "/search?q=\(key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")" + "&type=track,album,artist"),
+            with: URL(string: Constants.baseAPI + "/search?q=\(key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")" + "&type=track"),
             type: .GET) { baseRequest in
                 let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
                     guard let data = data, error == nil else {
@@ -56,8 +56,10 @@ final class APICaller {
                         return
                     }
                     do {
-                        let cek = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                        print(cek)
+//                        let cek = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                        print(cek)
+                        let result = try JSONDecoder().decode(SearchResult.self, from: data)
+                        completion(.success(result))
                     } catch {
                         completion(.failure(error))
                     }

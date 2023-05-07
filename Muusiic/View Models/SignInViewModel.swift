@@ -8,11 +8,13 @@
 import Foundation
 import AuthenticationServices
 import Combine
+import SwiftUI
 
 class SignInViewModel: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
     
     private var subscriptions = [AnyCancellable]()
     public var completion: ((Bool) -> Void)?
+    
     
     public var isSigned: Bool {
         return accessToken != nil
