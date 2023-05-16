@@ -7,13 +7,24 @@ Muusiic is an advanced application from MyPlaylist. In Muusiic, you can pause, s
 ## Application Screenshot
 
 - Listen Now
+---
 <img width="340" alt="Simulator Screenshot - iPhone 14 Pro - 2023-05-06 at 12 38 21" src="https://github.com/mhmmdvg/muusiic-swiftui/assets/57744555/7fa5ac82-d94b-44ff-82b8-033d575ca925">
 
+---
+
 - Search
+---
 <img width="340" alt="Simulator Screenshot - iPhone 14 Pro - 2023-05-06 at 12 38 29" src="https://github.com/mhmmdvg/muusiic-swiftui/assets/57744555/40184d4b-b242-435c-8be5-0765055d7f03">
 
+---
+
 - Library
+---
 <img width="340" alt="Simulator Screenshot - iPhone 14 Pro - 2023-05-06 at 12 38 41" src="https://github.com/mhmmdvg/muusiic-swiftui/assets/57744555/c1fb48ff-030f-4eaa-943b-1ccf3c559b86">
 
+---
+
 - Player
+---
 <img width="340" alt="Simulator Screenshot - iPhone 14 Pro - 2023-05-06 at 12 38 36" src="https://github.com/mhmmdvg/muusiic-swiftui/assets/57744555/2160838e-fcad-4ea1-bcf7-01965cd2b417">
+
